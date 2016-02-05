@@ -4,7 +4,7 @@ Easily assign icons for categories, tags, and custom taxonomy terms.
 
 Advanced Term Fields: Icons extends the Advanced Term Fields framework to give users the ability to easily add and manage icons for any category, tag, or custom taxonomy.
 
-Easily sort and manage your color-coded terms!
+![term admin](assets/screenshot.png?raw=true "Dashicons!")
 
 # Installation
 
