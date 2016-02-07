@@ -1,10 +1,10 @@
 # Advanced Term Fields: Icons
 
-Easily assign icons for categories, tags, and custom taxonomy terms.
+Easily assign icons for categories, tags, and custom taxonomy terms. Term meta, iconified!
 
 Advanced Term Fields: Icons extends the Advanced Term Fields framework to give users the ability to easily add and manage icons for any category, tag, or custom taxonomy.
 
-![term admin](assets/screenshot.png?raw=true "Dashicons!")
+![term admin](assets/screenshot-3.png?raw=true "Dashicons!")
 
 # Installation
 
@@ -23,9 +23,10 @@ Advanced Term Fields: Icons extends the Advanced Term Fields framework to give u
 
 # Usage
 
-This is an extension of the Advanced Term Fields framework.  To use, the Advanced Term Fields plugin must be installed on your project.  
+This is an extension of the Advanced Term Fields framework.  To use, the Advanced Term Fields plugin must be installed on your project.
 
-You can find the plugin here: 
+You can find the framework here:
+
 * On WP: [Advanced Term Fields](https://wordpress.org/plugins/advanced-term-fields/)
 * On GitHub: [Advanced Term Fields](https://github.com/dboutote/Advanced-Term-Fields)
 
@@ -37,9 +38,10 @@ The plugin's official page: http://darrinb.com/advanced-term-fields-icons
 
 ### Does this plugin depend on any others?
 
-Yes, this plugin is an extension of the Advanced Term Fields framework.  You'll need to install that plugin to handle all base functionality. 
+Yes, this plugin is an extension of the Advanced Term Fields framework.  You'll need to install that plugin to handle all base functionality.
 
-It can be found here: 
+It can be found here:
+
 * On WP: [Advanced Term Fields](https://wordpress.org/plugins/advanced-term-fields/)
 * On GitHub: [Advanced Term Fields](https://github.com/dboutote/Advanced-Term-Fields)
 

@@ -7,20 +7,21 @@ Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily assign icons for categories, tags, and custom taxonomy terms.
+Easily assign icons for categories, tags, and custom taxonomy terms. Term meta, iconified!
 
 == Description ==
 
 Advanced Term Fields: Icons extends the Advanced Term Fields framework to give users the ability to easily add and manage icons for any category, tag, or custom taxonomy.
 
-Easily sort and manage your color-coded terms!
+
 
 
 = Usage =
 
-This is an extension of the Advanced Term Fields framework.  To use, the Advanced Term Fields plugin must be installed on your project.  
+This is an extension of the Advanced Term Fields framework.  To use, the Advanced Term Fields plugin must be installed on your project.
 
-You can find the plugin here: 
+You can find the framework here:
+
 * On WP: [Advanced Term Fields](https://wordpress.org/plugins/advanced-term-fields/)
 * On GitHub: [Advanced Term Fields](https://github.com/dboutote/Advanced-Term-Fields)
 
@@ -44,19 +45,28 @@ You can find the plugin here:
 
 = Where can I find documentation? =
 
-The plugin's official page: http://darrinb.com/advanced-term-fields-icons
+The plugin's official page: http://darrinb.com/advanced-term-fields-colors
 
 = Does this plugin depend on any others? =
 
-Yes, this plugin is an extension of the Advanced Term Fields framework.  You'll need to install that plugin to handle all base functionality. 
+Yes, this plugin is an extension of the Advanced Term Fields framework.  You'll need to install that plugin to handle all base functionality.
 
-It can be found here: 
+It can be found here:
+
 * On WP: [Advanced Term Fields](https://wordpress.org/plugins/advanced-term-fields/)
 * On GitHub: [Advanced Term Fields](https://github.com/dboutote/Advanced-Term-Fields)
 
 = Does this create/modify/destroy database tables? =
 
 This leverages the term meta capabilities added in WordPress 4.4.  No database modifications needed!
+
+== Screenshots ==
+
+1. Custom column to the Tag List Table.
+2. Select your icon using the slick dashicon picker.
+3. Accessible from the Quick Edit form
+4. Icon picker on the Edit Tag screen.
+
 
 == Changelog ==
 
