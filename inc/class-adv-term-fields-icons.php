@@ -23,12 +23,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Adds icons for taxonomy terms
  *
- * @version 1.0.0
+ * @version 0.1.0
  *
  * @since 0.1.0
  *
  */
-final class Adv_Term_Fields_Icons extends Advanced_Term_Fields
+class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 {
 
 	/**
@@ -38,7 +38,7 @@ final class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	 *
 	 * @var string
 	 */
-	public $version = '0.1.0';
+	protected static $version = 'Icons0.1.0';
 
 
 	/**
@@ -50,12 +50,31 @@ final class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	 *
 	 * @var string
 	 */
-	public $meta_key = 'term_icon';
+	public $meta_key = '_term_icon';
 
 
 	/**
-	 * Unique singular slug for meta type
+	 * Singular slug for meta key
 	 *
+	 * Used for:
+	 * - localizing js files
+	 * - form field views
+	 *
+	 * @see Adv_Term_Fields_Icons::enqueue_admin_scripts()
+	 * @see Adv_Term_Fields_Icons\Views\(add|edit|qedit).php
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var string
+	 */
+	public $meta_slug = 'term-icon';
+
+
+	/**
+	 * Unique singular descriptor for meta type
+	 *
+	 * (e.g.) "icon", "color", "thumbnail", "image", "lock".
+	 * 
 	 * Used in localizing js files.
 	 *
 	 * @see Adv_Term_Fields_Icons::enqueue_admin_scripts()
@@ -106,8 +125,9 @@ final class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 		$this->process_term_meta();
 		$this->filter_terms_query();
 		$this->show_inner_fields();
+		$this->check_update( self::$version );
 	}
-
+	
 
 	/**
 	 * Sets labels for form fields
@@ -153,13 +173,14 @@ final class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 		wp_localize_script( 'atf-icons', 'l10n_ATF_Icons', array(
 			'custom_column_name' => esc_html__( $this->custom_column_name ),
 			'meta_key'	         => esc_html__( $this->meta_key ),
+			'meta_slug'	         => esc_html__( $this->meta_slug ),
 			'data_type'	         => esc_html__( $this->data_type ),
 		) );
 	}
 
 
 	/**
-	 * Prints out css styles in admin head
+	 * Prints out CSS styles in admin head
 	 *
 	 * Note: Only loads on edit-tags.php
 	 *
@@ -212,6 +233,7 @@ final class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	 *
 	 * @uses Advanced_Term_Fields::$file To include view.
 	 * @uses Advanced_Term_Fields::$meta_key To populate field attributes.
+	 * @uses Advanced_Term_Fields::$meta_slug To populate CSS IDs, classes.
 	 *
 	 * @access public
 	 *
@@ -224,7 +246,7 @@ final class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	public function show_inner_field_add( $taxonomy = '' )
 	{
 		ob_start();
-		include dirname( $this->file ) . '/views/add-form-field.php';
+		include dirname( $this->file ) . '/views/inner-add-form-field.php';
 		$field = ob_get_contents();
 		ob_end_clean();
 
@@ -241,6 +263,7 @@ final class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	 * @uses Advanced_Term_Fields::$file To include view.
 	 * @uses Advanced_Term_Fields::$meta_key To populate field attributes.
 	 * @uses Advanced_Term_Fields::get_meta() To retrieve meta value.
+	 * @uses Advanced_Term_Fields::$meta_slug To populate CSS IDs, classes.
 	 *
 	 * @access public
 	 *
@@ -254,7 +277,7 @@ final class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	public function show_inner_field_edit( $term = false, $taxonomy = '' )
 	{
 		ob_start();
-		include dirname( $this->file ) . '/views/edit-form-field.php';
+		include dirname( $this->file ) . '/views/inner-edit-form-field.php';
 		$field = ob_get_contents();
 		ob_end_clean();
 
@@ -270,6 +293,7 @@ final class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	 *
 	 * @uses Advanced_Term_Fields::$file To include view.
 	 * @uses Advanced_Term_Fields::$meta_key To populate field attributes.
+	 * @uses Advanced_Term_Fields::$meta_slug To populate CSS IDs, classes.
 	 *
 	 * @access public
 	 *
@@ -284,7 +308,7 @@ final class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	public function show_inner_field_qedit( $column_name = '' , $screen = '' , $taxonomy = '' )
 	{
 		ob_start();
-		include dirname( $this->file ) . '/views/quick-form-field.php';
+		include dirname( $this->file ) . '/views/inner-quick-form-field.php';
 		$field = ob_get_contents();
 		ob_end_clean();
 
