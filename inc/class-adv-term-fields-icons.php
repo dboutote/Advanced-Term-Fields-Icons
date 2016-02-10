@@ -38,7 +38,7 @@ class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	 *
 	 * @var string
 	 */
-	protected static $version = 'Icons0.1.0';
+	protected $version = ATF_ICONS_VERSION;
 
 
 	/**
@@ -107,10 +107,11 @@ class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	 * @uses Advanced_Term_Fields::show_custom_column()
 	 * @uses Advanced_Term_Fields::show_custom_fields()
 	 * @uses Advanced_Term_Fields::register_meta()
-	 * @uses Advanced_Term_Fields::load_admin_functions()
 	 * @uses Advanced_Term_Fields::process_term_meta()
 	 * @uses Advanced_Term_Fields::filter_terms_query()
 	 * @uses Advanced_Term_Fields::$allowed_taxonomies
+	 * @uses Adv_Term_Fields_Icons::load_admin_functions()
+	 * @uses Adv_Term_Fields_Icons::show_inner_fields()
 	 *
 	 * @access public
 	 *
@@ -124,9 +125,82 @@ class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 		$this->load_admin_functions();
 		$this->process_term_meta();
 		$this->filter_terms_query();
-		$this->show_inner_fields();
-		$this->check_update( self::$version );
+		$this->show_inner_fields();		
 	}
+	
+	
+	/**
+	 * Loads various admin functions
+	 *
+	 * - Checks for version update.
+	 * - Loads js/css scripts
+	 *
+	 * @uses Advanced_Term_Fields::load_admin_functions()	 
+	 *
+	 * @access public
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	public function load_admin_functions()
+	{
+		parent::load_admin_functions();
+		add_action( 'admin_init', array( $this, 'check_for_update' ) );
+	}
+		
+	
+	/**
+	 * Loads upgrade check
+	 *
+	 * Checks if declared plugin version  matches the version stored in the database.
+	 *
+	 * @uses Adv_Term_Fields_Icons::$version
+	 * @uses Adv_Term_Fields_Icons::$db_version_key
+	 * @uses WordPress get_option()
+	 * @uses Adv_Term_Fields_Icons::upgrade_version()
+	 *
+	 *
+	 * @access public
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	public function check_for_update()
+	{
+		$db_version_key = $this->db_version_key;	
+		$db_version = get_option( $db_version_key );
+		
+		if ( ! $db_version || version_compare( $db_version, $this->version, '<' ) ) {
+			$this->upgrade_version( $db_version_key, $this->version, $db_version );		
+		}		
+	}
+	
+	
+	/**
+	 * Upgrades database record of plugin version
+	 *
+	 * @uses WordPress update_option()
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param string $db_version_key The database key for the plugin version.
+	 * @param string $plugin_version The most recent plugin version.
+	 * @param string $db_version The plugin version stored in the database pre upgrade.
+	 *
+	 * @return bool $updated True if version has changed, false if not or if update failed.
+	 */
+	public function upgrade_version( $db_version_key, $plugin_version, $db_version = 0 )
+	{
+		do_action( "atf_pre_{$this->meta_key}_version_upgrade", $plugin_version, $db_version, $db_version_key );
+		
+		$updated = update_option( $db_version_key, $plugin_version );
+		
+		do_action( "atf_{$this->meta_key}_version_upgraded", $updated, $plugin_version, $db_version, $db_version_key );
+		
+		return $updated;
+	}	
 	
 
 	/**
