@@ -23,7 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Adds icons for taxonomy terms
  *
- * @version 0.1.0
+ * @version 0.1.1 Added upgrade check. Changed $meta_key to protected.
+ * @version 0.1.0 
  *
  * @since 0.1.0
  *
@@ -74,7 +75,7 @@ class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	 * Unique singular descriptor for meta type
 	 *
 	 * (e.g.) "icon", "color", "thumbnail", "image", "lock".
-	 * 
+	 *
 	 * Used in localizing js files.
 	 *
 	 * @see Adv_Term_Fields_Icons::enqueue_admin_scripts()
@@ -119,23 +120,23 @@ class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	 */
 	public function init()
 	{
-		$this->show_custom_column( $this->allowed_taxonomies );
-		$this->show_custom_fields( $this->allowed_taxonomies );
 		$this->register_meta();
 		$this->load_admin_functions();
+		$this->show_custom_column( $this->allowed_taxonomies );
+		$this->show_custom_fields( $this->allowed_taxonomies );
 		$this->process_term_meta();
 		$this->filter_terms_query();
-		$this->show_inner_fields();		
+		$this->show_inner_fields();
 	}
-	
-	
+
+
 	/**
 	 * Loads various admin functions
 	 *
 	 * - Checks for version update.
 	 * - Loads js/css scripts
 	 *
-	 * @uses Advanced_Term_Fields::load_admin_functions()	 
+	 * @uses Advanced_Term_Fields::load_admin_functions()
 	 *
 	 * @access public
 	 *
@@ -148,8 +149,8 @@ class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 		parent::load_admin_functions();
 		add_action( 'admin_init', array( $this, 'check_for_update' ) );
 	}
-		
-	
+
+
 	/**
 	 * Loads upgrade check
 	 *
@@ -163,45 +164,49 @@ class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	 *
 	 * @access public
 	 *
-	 * @since 0.1.0
+	 * @since 0.1.1
 	 *
 	 * @return void
 	 */
 	public function check_for_update()
 	{
-		$db_version_key = $this->db_version_key;	
+		$db_version_key = self::get_db_version_key( $this->meta_key );
 		$db_version = get_option( $db_version_key );
-		
-		if ( ! $db_version || version_compare( $db_version, $this->version, '<' ) ) {
-			$this->upgrade_version( $db_version_key, $this->version, $db_version );		
-		}		
+		$plugin_version = $this->version;
+
+		do_action( "atf_pre_{$this->meta_key}_upgrade_check", $db_version_key, $db_version );
+
+		if( ! $db_version || version_compare( $db_version, $plugin_version, '<' ) ) {
+			$this->upgrade_version( $db_version_key, $plugin_version, $db_version, $this->meta_key );
+		}
 	}
-	
-	
+
+
 	/**
 	 * Upgrades database record of plugin version
 	 *
 	 * @uses WordPress update_option()
 	 *
-	 * @since 0.1.0
+	 * @since 0.1.1
 	 *
 	 * @param string $db_version_key The database key for the plugin version.
 	 * @param string $plugin_version The most recent plugin version.
-	 * @param string $db_version The plugin version stored in the database pre upgrade.
+	 * @param string $db_version     The plugin version stored in the database pre upgrade.
+	 * @param string $meta_key       The meta field key.
 	 *
 	 * @return bool $updated True if version has changed, false if not or if update failed.
 	 */
-	public function upgrade_version( $db_version_key, $plugin_version, $db_version = 0 )
+	public function upgrade_version( $db_version_key, $plugin_version, $db_version = 0, $meta_key = '' )
 	{
-		do_action( "atf_pre_{$this->meta_key}_version_upgrade", $plugin_version, $db_version, $db_version_key );
-		
+		do_action( "atf_pre_{$meta_key}_version_upgrade", $plugin_version, $db_version, $db_version_key );
+
 		$updated = update_option( $db_version_key, $plugin_version );
-		
-		do_action( "atf_{$this->meta_key}_version_upgraded", $updated, $plugin_version, $db_version, $db_version_key );
-		
+
+		do_action( "atf_{$meta_key}_version_upgraded", $updated, $db_version_key, $plugin_version, $db_version, $meta_key );
+
 		return $updated;
-	}	
-	
+	}
+
 
 	/**
 	 * Sets labels for form fields
