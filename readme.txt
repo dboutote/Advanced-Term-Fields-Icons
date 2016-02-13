@@ -23,8 +23,8 @@ You can find the plugin here:
 
 = Other Extensions =
 
-* [Advanced Term Fields: Colors](https://github.com/dboutote/Advanced-Term-Fields-Colors) Color-code your terms!
-* [Advanced Term Fields: Featured Images](https://github.com/dboutote/Advanced-Term-Fields-Images) Featured images for terms!
+* [Advanced Term Fields: Colors](https://wordpress.org/plugins/advanced-term-fields-colors/) Color-code your terms!
+* [Advanced Term Fields: Featured Images](https://wordpress.org/plugins/advanced-term-fields-featured-images/) Featured images for terms!
 
 == Installation ==
 
