@@ -5,12 +5,12 @@
  * @package Advanced_Term_Fields_Icons
  *
  * @license     http://www.gnu.org/licenses/gpl-2.0.txt GPL-2.0+
- * @version     0.1.0
+ * @version     0.1.1
  *
  * Plugin Name: Advanced Term Fields: Icons
  * Plugin URI:  http://darrinb.com/advanced-term-fields-icons
- * Description: Easily assign dashicon icons for categories, tags, and custom taxonomy terms.
- * Version:     0.1.0
+ * Description: Easily assign dashicon icons for all your terms.
+ * Version:     0.1.1
  * Author:      Darrin Boutote
  * Author URI:  http://darrinb.com
  * Text Domain: atf-icons
@@ -18,6 +18,13 @@
  * License:     GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
+
+
+/**
+ * @attribution Inspired by the WP Term Icons Plugin (https://wordpress.org/plugins/wp-term-icons/)
+ *              by John James Jacoby (https://profiles.wordpress.org/johnjamesjacoby/)
+ */
+
 
 // No direct access
 if ( ! defined( 'ABSPATH' ) ) {
@@ -28,59 +35,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 /**
+ * @internal Nobody should be able to overrule the real version number
+ * as this can cause serious issues, so no if ( ! defined() )
+ *
+ * @since 0.1.1
+ */
+define( 'ATF_ICONS_VERSION', '0.1.1' );
+
+
+if ( ! defined( 'ATF_ICONS_FILE' ) ) {
+	define( 'ATF_ICONS_FILE', __FILE__ );
+}
+
+
+/**
+ * Load Utilities
+ *
+ * @since 0.1.0
+ */
+include dirname( __FILE__ ) . '/inc/functions.php';
+
+
+/**
  * Checks compatibility
  *
- * @uses _atf_icons_plugin_deactivate()
- * @uses _atf_icons_plugin_admin_notice()
- *
  * @since 0.1.0
- *
- * @return void
  */
-function _atf_icons_compatibility_check(){
-	if ( ! class_exists( 'Advanced_Term_Fields' ) ) :
-		add_action( 'admin_init', '_atf_icons_plugin_deactivate');
-		add_action( 'admin_notices', '_atf_icons_plugin_admin_notice');
-		return;
-	endif;
-
-	define( 'ATF_ICONS_COMPAT', true );
-}
 add_action( 'plugins_loaded', '_atf_icons_compatibility_check', 99 );
-
-
-/**
- * Deactivates plugin
- *
- * @since 0.1.0
- *
- * @return void
- */
-function _atf_icons_plugin_deactivate() {
-	deactivate_plugins( plugin_basename( __FILE__ ) );
-}
-
-
-/**
- * Displays deactivation notice
- *
- * @since 0.1.0
- *
- * @return void
- */
-function _atf_icons_plugin_admin_notice() {
-	echo '<div class="error"><p>'
-		. sprintf(
-			__( '%1$s requires the %2$s plugin to function correctly. Unable to activate at this time.', 'atf-icons' ),
-			'<strong>' . esc_html( 'Advanced Term Fields: Icons' ) . '</strong>',
-			'<strong>' . esc_html( 'Advanced Term Fields' ) . '</strong>'
-			)
-		. '</p></div>';
-
-	if ( isset( $_GET['activate'] ) ) {
-		unset( $_GET['activate'] );
-	}
-}
 
 
 /**
@@ -90,7 +71,7 @@ function _atf_icons_plugin_admin_notice() {
  */
 function _atf_icons_init() {
 
-	if( ! defined( 'ATF_ICONS_COMPAT' ) ){ return; }
+	if ( ! _atf_icons_compatibility_check() ){ return; }
 
 	include dirname( __FILE__ ) . '/inc/class-adv-term-fields-icons.php';
 
@@ -99,3 +80,12 @@ function _atf_icons_init() {
 
 }
 add_action( 'init', '_atf_icons_init', 99 );
+
+
+/**
+ * Run actions on plugin upgrade
+ *
+ * @since 0.1.1
+ */
+add_action( "atf__term_icon_version_upgraded", '_atf_icons_version_upgraded_notice', 10, 5 );
+add_action( "atf__term_icon_version_upgraded", '_atf_icons_maybe_update_meta_key', 10, 5 );
