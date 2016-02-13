@@ -93,10 +93,10 @@ function _atf_icons_version_upgraded_notice( $updated, $db_version_key, $plugin_
 /**
  * Updates meta key to protected on upgrade
  *
- * Prior to v0.1.1 meta keys were stored non-protected i.e., "term_icon".  As of v0.1.1 meta keys
- * were stored as protected i.e., "_term_icon" with a prefixed underscore "_".  This function
- * updates all old versions of the stored meta key. It will only be run once, on upgrade to any version
- * higher than 0.1.0.
+ * Prior to v0.1.1 meta keys were stored non-protected, i.e. "term_icon".  As of v0.1.1 meta keys
+ * were stored as protected, i.e. "_term_icon" with a prefixed underscore "_".  This function
+ * updates all old versions of the stored meta key. It will only be run once, on upgrade to any 
+ * version higher than 0.1.0.
  *
  * @since 0.1.1
  *

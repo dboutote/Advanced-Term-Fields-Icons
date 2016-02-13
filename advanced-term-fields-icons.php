@@ -9,7 +9,7 @@
  *
  * Plugin Name: Advanced Term Fields: Icons
  * Plugin URI:  http://darrinb.com/advanced-term-fields-icons
- * Description: Easily assign dashicon icons for categories, tags, and custom taxonomy terms.
+ * Description: Easily assign dashicon icons for all your terms.
  * Version:     0.1.1
  * Author:      Darrin Boutote
  * Author URI:  http://darrinb.com
@@ -18,6 +18,7 @@
  * License:     GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
+
 
 /**
  * @attribution Inspired by the WP Term Icons Plugin (https://wordpress.org/plugins/wp-term-icons/)
@@ -34,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 /**
- * @internal Nobody should be able to overrule the real version number 
+ * @internal Nobody should be able to overrule the real version number
  * as this can cause serious issues, so no if ( ! defined() )
  *
  * @since 0.1.1

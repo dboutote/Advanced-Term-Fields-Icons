@@ -23,8 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Adds icons for taxonomy terms
  *
- * @version 0.1.1 Added upgrade check. Changed $meta_key to protected.
- * @version 0.1.0 
+ * @version 0.1.1 Added upgrade check. Changed $meta_key to protected. Added @var $meta_slug.
+ * @version 0.1.0
  *
  * @since 0.1.0
  *
@@ -170,7 +170,7 @@ class Adv_Term_Fields_Icons extends Advanced_Term_Fields
 	 */
 	public function check_for_update()
 	{
-		$db_version_key = self::get_db_version_key( $this->meta_key );
+		$db_version_key = $this->db_version_key;
 		$db_version = get_option( $db_version_key );
 		$plugin_version = $this->version;
 
