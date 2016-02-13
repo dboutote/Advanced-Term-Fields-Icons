@@ -62,9 +62,9 @@ This leverages the term meta capabilities added in WordPress 4.4.  No database m
 
 == Screenshots ==
 
-1. Custom column to the Tag List Table.
+1. Custom column on the Tag List Table.
 2. Select your icon using the slick dashicon picker.
-3. Accessible from the Quick Edit form
+3. Accessible from the Quick Edit form.
 4. Icon picker on the Edit Tag screen.
 
 
